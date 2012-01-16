@@ -177,16 +177,6 @@ package com.asfusion.mate.actions
 			return sourceObject;
 		}
 		
-//		protected function createInstanceLegacy(scope:IScope):Object
-//		{
-//			var sourceObject:Object = Cache.getCachedInstance(source, sourceCache, scope);
-//			if (!sourceObject)
-//			{
-//				var creator:Creator = new Creator(source, scope.dispatcher);
-//				sourceObject = creator.create(scope, true, null, sourceCache);
-//			}
-//		}
-		
 		//-----------------------------------------------------------------------------------------------------------
 		//                                         Override protected methods
 		//-----------------------------------------------------------------------------------------------------------
