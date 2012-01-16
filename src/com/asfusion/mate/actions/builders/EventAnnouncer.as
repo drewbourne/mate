@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions.builders
@@ -33,72 +33,75 @@ package com.asfusion.mate.actions.builders
 	[Exclude(name="cache", kind="property")]
 	
 	/**
-	* <code>EventAnnouncer</code> allows you to dispatch events from a <code>IActionList</code>. 
+	* <code>EventAnnouncer</code> allows you to dispatch events from a <code>IActionList</code>.
 	* When the <code>IActionList</code> is executed, it will create an event of the class specified in the <code>generator</code>
-	* attribute. 
-	* <p>It will then add any properties to the newly created event and dispatch it. 
-	* You can pass properties to the event that come from a variety of sources, 
+	* attribute.
+	* <p>It will then add any properties to the newly created event and dispatch it.
+	* You can pass properties to the event that come from a variety of sources,
 	* such as the original event that triggered the <code>IActionList</code>, a server result object, or any other value.</p>
-	* 
-    * @example This example demonstrates how you can create an 
-    * event using the EventAnnouncer and set its properties using the Properties inner tag.
-    * 
-    * <listing version="3.0">
-    * &lt;EventAnnouncer
+	*
+	* @example This example demonstrates how you can create an
+	* event using the EventAnnouncer and set its properties using the Properties inner tag.
+	*
+	* <listing version="3.0">
+	* &lt;EventAnnouncer
 	*          generator="MyEventClass"
 	*          type="myEventType"/&gt;
-	* 
+	*
 	*          &lt;Properties
 	*          myProperty="myValue"
 	*          myProperty2="100"/&gt;
-	* 
+	*
 	* &lt;/EventAnnouncer/&gt;
-    * </listing>
-    * 
+	* </listing>
+	*
 	* @mxml
- 	* <p>The <code>&lt;EventAnnouncer&gt;</code> tag has the following tag attributes:</p>
- 	* <pre>
+  * <p>The <code>&lt;EventAnnouncer&gt;</code> tag has the following tag attributes:</p>
+	  * <pre>
 	* &lt;EventAnnouncer
- 	* <b>Properties</b>
-	* generator="Class"
+  * <b>Properties</b>
+		* generator="Class"
 	* constructorArguments="Object|Array"
 	* type="String"
 	* bubbles="true|false"
 	* cancelable="true|false"
- 	* /&gt;
-	* </pre>
-	* 
+  * /&gt;
+		* </pre>
+	*
 	* @see com.asfusion.mate.actionLists.EventHandlers
 	*/
 	public class EventAnnouncer extends ObjectBuilder implements IAction
 	{
-
+		
 		//-----------------------------------------------------------------------------------------------------------
 		//                                         Public Setters and Getters
 		//-------------------------------------------------------------------------------------------------------------
 		//.........................................generator..........................................
 		private var _generator:Class = DynamicEvent;
+		
 		/**
 		* The generator attribute specifies what class should be instantiated.
 		* If this attribute is not specified, then a DynamicEvent will be generated.
-		* 
+		*
 		*  @default mx.events.DynamicEvent
 		*/
 		override public function get generator():Class
 		{
 			return _generator;
 		}
+		
 		override public function set generator(value:Class):void
 		{
-	        _generator = value;
+			_generator = value;
 		}
 		
 		
 		//.........................................type..........................................
 		private var _type:String;
+		
 		/**
 		*  The type attribute specifies the event type you want to dispatch.
-		* 
+		*
 		*  @default null
 		*/
 		public function get type():String
@@ -114,10 +117,11 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................bubbles..........................................
 		private var _bubbles:Boolean;
+		
 		/**
-		* Although you can specify the event's bubbles property, whether you set it to true or false will have little effect, 
+		* Although you can specify the event's bubbles property, whether you set it to true or false will have little effect,
 		* as the event will be dispatched from the Mate Dispatcher itself.
-		* 
+		*
 		*  @default false
 		*/
 		public function get bubbles():Boolean
@@ -133,9 +137,10 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................cancelable..........................................
 		private var _cancelable:Boolean = true;
+		
 		/**
 		* Indicates whether the behavior associated with the event can be prevented.
-		* 
+		*
 		*  @default true
 		*/
 		public function get cancelable():Boolean
@@ -156,6 +161,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return "none";
 		}
+		
 		override public function set cache(value:String):void
 		{
 			throw(new Error("Events and reponses cannot be cached"));
@@ -163,20 +169,22 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................dispatcherType..........................................
 		private var _dispatcherType:String = "inherit";
+		
 		/**
-		 * String that defines whether the dispatcher used by this tag is <code>global</code> or 
-		 * <code>inherit</code>. If it is <code>inherit</code>, the dispatcher used is the 
+		 * String that defines whether the dispatcher used by this tag is <code>global</code> or
+		 * <code>inherit</code>. If it is <code>inherit</code>, the dispatcher used is the
 		 * dispatcher provided by the EventMap where this tag lives.
 		 */
 		public function get dispatcherType():String
 		{
 			return _dispatcherType;
 		}
+		
 		[Inspectable(enumeration="inherit,global")]
 		public function set dispatcherType(value:String):void
 		{
 			var oldValue:String = _dispatcherType;
-			if(oldValue != value)
+			if (oldValue != value)
 			{
 				_dispatcherType = value;
 			}
@@ -192,21 +200,26 @@ package com.asfusion.mate.actions.builders
 		override protected function createInstance(scope:IScope):Object
 		{
 			currentInstance = null;
-
-			var creator:Creator = new Creator( generator, scope.dispatcher);
-			if(constructorArguments !== undefined)
+			
+			var creator:Creator = new Creator(
+				generator,
+				scope.dispatcher,
+				scope.eventMap.getInjectorForCache(scope.eventMap.cache),
+				scope.getLogger());
+			
+			if (constructorArguments !== undefined)
 			{
-				currentInstance = creator.create( scope, false, constructorArguments );
+				currentInstance = creator.create(scope, false, constructorArguments);
 			}
 			else
 			{
-				if(type)
+				if (type)
 				{
-					currentInstance = creator.create(  scope, false, [type, bubbles, cancelable]);
+					currentInstance = creator.create(scope, false, [ type, bubbles, cancelable ]);
 				}
 				else
 				{
-					scope.getLogger().error( LogTypes.TYPE_NOT_FOUND, new LogInfo(scope) );
+					scope.getLogger().error(LogTypes.TYPE_NOT_FOUND, new LogInfo(scope));
 				}
 			}
 			return currentInstance;
@@ -218,14 +231,14 @@ package com.asfusion.mate.actions.builders
 		 */
 		override protected function run(scope:IScope):void
 		{
-			if(currentInstance is Event)
+			if (currentInstance is Event)
 			{
 				var dispatcher:IEventDispatcher = (dispatcherType == "inherit") ? scope.dispatcher : scope.getManager().dispatcher;
 				scope.lastReturn = dispatcher.dispatchEvent(currentInstance as Event);
 			}
 			else
 			{
-				scope.getLogger().error(LogTypes.IS_NOT_AN_EVENT, new LogInfo(scope, currentInstance) );
+				scope.getLogger().error(LogTypes.IS_NOT_AN_EVENT, new LogInfo(scope, currentInstance));
 			}
 		}
 	}

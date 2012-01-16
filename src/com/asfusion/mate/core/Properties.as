@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.core
@@ -54,35 +54,40 @@ package com.asfusion.mate.core
 		{
 			var logInfo:LogInfo;
 			
-			for( var propertyName:String in source)
+			for (var propertyName:String in source)
 			{
 				var realValue:* = source[propertyName];
-				if(realValue is Class)
+				if (realValue is Class)
 				{
-					realValue = new Cache(realValue); 
+					realValue = new Cache(realValue);
 				}
-				if(realValue is ISmartObject)
+				if (realValue is ISmartObject)
 				{
-					realValue = ISmartObject(realValue).getValue(scope); 
+					realValue = ISmartObject(realValue).getValue(scope);
 				}
 				try
 				{
 					target[propertyName] = realValue;
 				}
-				catch(error:ReferenceError)
+				catch (error:ReferenceError)
 				{
 					logInfo = new LogInfo(scope, target, error, null, null, propertyName)
-					scope.getLogger().error(LogTypes.PROPERTY_NOT_FOUND, logInfo); 
+					scope.getLogger().error(LogTypes.PROPERTY_NOT_FOUND, logInfo);
 				}
-				catch(error:TypeError)
+				catch (error:TypeError)
 				{
 					logInfo = new LogInfo(scope, target, error, null, null, propertyName)
-					logInfo.data = {target:target, targetKey:propertyName, source:realValue};
+					logInfo.data = { target: target, targetKey: propertyName, source: realValue };
 					scope.getLogger().error(LogTypes.PROPERTY_TYPE_ERROR, logInfo);
 				}
 				
 			}
-			if(source._id) target['id'] = source._id;
+			
+			if (source._id)
+			{
+				target['id'] = source._id;
+			}
+			
 			return target;
 		}
 		
@@ -91,13 +96,12 @@ package com.asfusion.mate.core
 		-------------------------------------------------------------------------------------------------------------*/
 		/**
 		 * Similar to <code>smartCopy</code> this method will copy the properties
-		 * to the target object. 
+		 * to the target object.
 		 * The difference is that it will copy its own properties to the target.
 		 */
 		public function setProperties(target:Object, scope:IScope):Object
 		{
-			return smartCopy(this,target,scope);
+			return smartCopy(this, target, scope);
 		}
-
 	}
 }

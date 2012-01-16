@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions.builders
@@ -23,12 +23,18 @@ package com.asfusion.mate.actions.builders
 	import com.asfusion.mate.actions.BaseAction;
 	import com.asfusion.mate.actions.IAction;
 	import com.asfusion.mate.core.*;
+	import com.asfusion.mate.events.InjectorEvent;
+	
+	import flash.events.Event;
+	
+	import mx.core.EventPriority;
+	
 	use namespace mate;
 	
 	/**
 	 * ObjectBuilder is the base class for all the classes that use the <code>generator</code> property
 	 * to create instances. The <code>generator</code> is the class template to use to instantiate new objects.
-	 * 
+	 *
 	 */
 	public class ObjectBuilder extends BaseAction implements IAction, IBuilder
 	{
@@ -38,6 +44,7 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................generator..........................................
 		private var _generator:Class;
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -45,19 +52,21 @@ package com.asfusion.mate.actions.builders
 		{
 			return _generator;
 		}
+		
 		public function set generator(value:Class):void
 		{
-	 		_generator = value;
+			_generator = value;
 		}
 		
 		
 		
 		//.........................................constructorArguments..........................................
 		private var _constructorArguments:* = undefined;
+		
 		/**
-		*  The constructorArgs allows you to pass an Object or an Array of objects to the contructor 
+		*  The constructorArgs allows you to pass an Object or an Array of objects to the contructor
 		*  when the instance is created.
-		*  <p>You can use an array to pass multiple arguments or use a simple Object if your 
+		*  <p>You can use an array to pass multiple arguments or use a simple Object if your
 		 * signature has only one parameter.</p>
 		*
 		*    @default undefined
@@ -66,24 +75,27 @@ package com.asfusion.mate.actions.builders
 		{
 			return _constructorArguments;
 		}
+		
 		public function set constructorArguments(value:*):void
 		{
-	 		_constructorArguments = value;
+			_constructorArguments = value;
 		}
 		
 		//.........................................cache..........................................
 		private var _cache:String = "inherit";
+		
 		/**
-		 * The cache attribute lets you specify whether this newly created object should be kept live 
-		 * so that the next time an instance of this class is requested, this already created object 
+		 * The cache attribute lets you specify whether this newly created object should be kept live
+		 * so that the next time an instance of this class is requested, this already created object
 		 * is returned instead.
-		 * 
+		 *
 		 *  @default inherit
 		 */
 		public function get cache():String
 		{
 			return _cache;
 		}
+		
 		[Inspectable(enumeration="local,global,inherit,none")]
 		public function set cache(value:String):void
 		{
@@ -92,14 +104,16 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................registerTarget..........................................
 		private var _registerTarget:Boolean = true;
+		
 		/**
 		 * Registers the newly created object as an injector target. If true, this allows this object to be injected
 		 * with properties using the <code>Injectors</code> tags.
 		 */
-		 public function get registerTarget():Boolean
+		public function get registerTarget():Boolean
 		{
 			return _registerTarget;
 		}
+		
 		[Inspectable(enumeration="true,false")]
 		public function set registerTarget(value:Boolean):void
 		{
@@ -114,26 +128,25 @@ package com.asfusion.mate.actions.builders
 		
 		//.........................................createInstance..........................................
 		/**
-		* Where the currentInstance is created using the 
+		* Where the currentInstance is created using the
 		* <code>generator</code> class as the template, passing arguments to the constructor
 		* as specified by the <code>constructorArgs</code> (if any).
-		* 
+		*
 		*/
 		protected function createInstance(scope:IScope):Object
-		{	
-			if(cache != Cache.NONE)
-			{
-				currentInstance = Cache.getCachedInstance(generator, cache, scope);
-			}
+		{
+			var injector:IInjector = scope.eventMap.getInjectorForCache(cache);
 			
-			if(!currentInstance || cache == Cache.NONE)
-			{
-				var creator:Creator = new Creator( generator, scope.dispatcher );
-				currentInstance = creator.create( scope, registerTarget, constructorArguments, cache );
-			}
+			var creator:Creator = new Creator(
+				generator,
+				scope.dispatcher,
+				injector,
+				scope.getLogger());
+			
+			currentInstance = creator.create(scope, registerTarget, constructorArguments, cache);
+			
 			return currentInstance;
 		}
-		
 		
 		//-----------------------------------------------------------------------------------------------------------
 		//                                          Override Protected methods

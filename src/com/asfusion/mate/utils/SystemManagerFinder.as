@@ -16,7 +16,6 @@ Author: Nahuel Foronda, Principal Architect
         nahuel at asfusion dot com
                 
 @ignore
-
 */
 package com.asfusion.mate.utils
 {

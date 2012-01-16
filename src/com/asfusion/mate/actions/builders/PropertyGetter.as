@@ -51,7 +51,7 @@ package com.asfusion.mate.actions.builders
 		{
 			var logInfo:LogInfo;
 			
-			if(currentInstance.hasOwnProperty(targetKey))
+			if (currentInstance.hasOwnProperty(targetKey))
 			{
 				scope.lastReturn = currentInstance[targetKey];
 			}
