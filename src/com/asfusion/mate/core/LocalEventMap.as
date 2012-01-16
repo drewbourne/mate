@@ -36,6 +36,7 @@ package com.asfusion.mate.core
 			
 			injector = globalInjector.createChild();
 			injector.mapValue(IInjector, injector);
+			injector.mapValue(IReflector, reflector);
 		}
 		
 		//.........................................dispatcher..........................................
