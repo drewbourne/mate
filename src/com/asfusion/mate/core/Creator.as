@@ -38,6 +38,8 @@ package com.asfusion.mate.core
 		//-----------------------------------------------------------------------------------------------------------
 		protected var generator:Class;
 		
+		protected var whenAskedFor:Class;
+		
 		protected var dispatcher:IEventDispatcher;
 		
 		protected var injector:IInjector;
@@ -50,9 +52,11 @@ package com.asfusion.mate.core
 		/**
 		 * Constructor
 		 */
-		public function Creator(classGenerator:Class, dispatcher:IEventDispatcher, injector:IInjector, logger:IMateLogger)
+		public function Creator(generator:Class, dispatcher:IEventDispatcher, injector:IInjector, logger:IMateLogger,
+			whenAskedFor:Class = null)
 		{
-			generator = classGenerator;
+			this.generator = generator;
+			this.whenAskedFor = whenAskedFor || generator;
 			
 			this.dispatcher = dispatcher;
 			this.injector = injector;
@@ -207,7 +211,7 @@ package com.asfusion.mate.core
 		{
 			if (instance)
 			{
-				injector.mapValue(generator, instance);
+				injector.mapValue(whenAskedFor, instance);
 			}
 		}
 		

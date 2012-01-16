@@ -58,7 +58,23 @@ package com.asfusion.mate.actions.builders
 			_generator = value;
 		}
 		
+		//.........................................whenAskedFor..........................................
+		private var _whenAskedFor:Class;
 		
+		/**
+		 *  The interface or class the generator should be registered as, defaults to the value of <code>generator</code>.
+		 *
+		 *  @default null
+		 */
+		public function get whenAskedFor():Class
+		{
+			return _whenAskedFor;
+		}
+		
+		public function set whenAskedFor(value:Class):void
+		{
+			_whenAskedFor = value;
+		}
 		
 		//.........................................constructorArguments..........................................
 		private var _constructorArguments:* = undefined;
@@ -141,7 +157,8 @@ package com.asfusion.mate.actions.builders
 				generator,
 				scope.dispatcher,
 				injector,
-				scope.getLogger());
+				scope.getLogger(),
+				whenAskedFor);
 			
 			currentInstance = creator.create(scope, registerTarget, constructorArguments, cache);
 			
