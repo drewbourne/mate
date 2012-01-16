@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions
@@ -23,6 +23,7 @@ package com.asfusion.mate.actions
 	import com.asfusion.mate.actionLists.IScope;
 	
 	import mx.core.IMXMLObject;
+	
 	/**
 	 * AbstractAction is a base class for all classes implementing <code>IAction</code>.
 	 */
@@ -35,19 +36,19 @@ package com.asfusion.mate.actions
 		 *  child implementations.
 		 *  <p>Usually, this <code>currentInstance</code> is set or created
 		 *  in the prepare method, but it is not mandatory.</p>
-		 * 
+		 *
 		 *  @default null
 		*/
-	    protected var currentInstance:* = null;
-
-	  
+		protected var currentInstance:* = null;
+		
+		
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Implementation of IAction interface
 		-------------------------------------------------------------------------------------------------------------*/
 		/*-.........................................trigger..........................................*/
 		/**
 		 * This method gets called when the IActionList (ex: EventHandlers) is running.
-		 * This method is called on each IAction that the IActionList contains in its 
+		 * This method is called on each IAction that the IActionList contains in its
 		 * <code>listeners</code> array.
 		 * <p>It is recomended that you do not override this method unless needed.
 		 * Instead, override the four methods that
@@ -69,7 +70,7 @@ package com.asfusion.mate.actions
 		/*-.........................................prepare..........................................*/
 		/**
 		 * The first method that <code>trigger</code> calls.
-		 * Usually, this is where the <code>currentInstance</code> is created or set if needed. 
+		 * Usually, this is where the <code>currentInstance</code> is created or set if needed.
 		 * In this method you can also perform any code that must be done first.
 		 */
 		protected function prepare(scope:IScope):void
@@ -85,19 +86,19 @@ package com.asfusion.mate.actions
 		 */
 		protected function setProperties(scope:IScope):void
 		{
-			if(currentInstance is IScopeReceiver)
+			if (currentInstance is IScopeReceiver)
 			{
 				IScopeReceiver(currentInstance).scope = scope;
 			}
-			if(currentInstance is IDataReceiver)
+			if (currentInstance is IDataReceiver)
 			{
 				IDataReceiver(currentInstance).data = scope.data;
 			}
-			if(currentInstance is IEventReceiver)
+			if (currentInstance is IEventReceiver)
 			{
 				IEventReceiver(currentInstance).event = scope.event;
 			}
-			
+		
 		}
 		
 		/*-.........................................run..........................................*/
@@ -129,6 +130,7 @@ package com.asfusion.mate.actions
 		 * A document object is an Object at the top of the hierarchy of a Flex application, MXML component, or AS component.
 		 */
 		protected var document:Object;
+		
 		/*-.........................................initialized..........................................*/
 		/**
 		 * Called automatically by the MXML compiler if the AbstractAction is set up by using a tag.

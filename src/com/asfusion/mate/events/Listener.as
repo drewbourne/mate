@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.events
@@ -27,12 +27,12 @@ package com.asfusion.mate.events
 	/**
 	 * The event that gets dispatched when an event of the type
 	 * specified in the <code>type</code> attribute is dispatched.
-	 */ 
-	[Event(name="receive",type="*")]
+	 */
+	[Event(name="receive", type="*")]
 	
 	/**
-	 * Listener allows you to register a view as a listener for an event type. 
-	 * As long as the event bubbles up or is dispatched via the <code>mate:Dispatcher</code> tag or class, 
+	 * Listener allows you to register a view as a listener for an event type.
+	 * As long as the event bubbles up or is dispatched via the <code>mate:Dispatcher</code> tag or class,
 	 * the registered listeners will be notified.
 	 */
 	public class Listener implements IEventDispatcher
@@ -66,20 +66,22 @@ package com.asfusion.mate.events
 		
 		/*-.........................................type..........................................*/
 		private var _type:String;
+		
 		/**
 		*  The type attribute specifies the event type you want to listen to.
-		* 
+		*
 		*  @default null
 		*/
 		public function get type():String
 		{
 			return _type;
 		}
+		
 		public function set type(value:String):void
 		{
 			var oldValue:String = _type;
 			
-			if(oldValue != value)
+			if (oldValue != value)
 			{
 				
 				/*
@@ -92,8 +94,9 @@ package com.asfusion.mate.events
 		
 		
 		/*-.........................................method..........................................*/
-		 
+		
 		private var _method:Function;
+		
 		/**
 		 * Specifies the method to call when an event is received. Called method will automatically receive the event.
 		 */
@@ -101,13 +104,14 @@ package com.asfusion.mate.events
 		{
 			return _method;
 		}
+		
 		public function set method(value:Function):void
 		{
-			if(value != _method)
+			if (value != _method)
 			{
-				if(type)
+				if (type)
 				{
-					if(_method != null && methodRegistered)
+					if (_method != null && methodRegistered)
 					{
 						dispatcher.removeEventListener(type, _method);
 					}
@@ -122,16 +126,17 @@ package com.asfusion.mate.events
 		private var _priority:int;
 		
 		/**
-		 * 	(default = 0) — The priority level of the <code>Listener</code>. 
-		 * 	The higher the number, the higher the priority. All listeners with priority n are processed before listeners of priority n-1. 
+		 * 	(default = 0) — The priority level of the <code>Listener</code>.
+		 * 	The higher the number, the higher the priority. All listeners with priority n are processed before listeners of priority n-1.
 		 * 	If two or more listeners share the same priority, they are processed in the order in which they were added. The default priority is 0.
-		 * 
+		 *
 		 *  @default 0
 		 * */
 		public function get priority():int
 		{
 			return _priority;
 		}
+		
 		public function set priority(value:int):void
 		{
 			_priority = value;
@@ -140,25 +145,27 @@ package com.asfusion.mate.events
 		
 		/*-.........................................useWeakReference..........................................*/
 		private var _useWeakReference:Boolean = true;
+		
 		/**
-		 * (default = true) — Determines whether the reference to the listener is strong or weak. 
-		 * A strong reference (the default) prevents your listener from being garbage-collected. 
+		 * (default = true) — Determines whether the reference to the listener is strong or weak.
+		 * A strong reference (the default) prevents your listener from being garbage-collected.
 		 * A weak reference does not.
 		 * When using modules, it is recomended to use weak references to garbage-collect unused modules
-		 * 
+		 *
 		 *  @default true
 		 * */
 		public function get useWeakReference():Boolean
 		{
 			return _useWeakReference;
 		}
+		
 		public function set useWeakReference(value:Boolean):void
 		{
-	        if (_useWeakReference !== value)
-	        {
-	        	_useWeakReference = value;
+			if (_useWeakReference !== value)
+			{
+				_useWeakReference = value;
 				updateListeners(type, type);
-	        }
+			}
 		}
 		
 		/*-----------------------------------------------------------------------------------------------------------
@@ -180,34 +187,34 @@ package com.asfusion.mate.events
 		
 		/*-.........................................hasEventListener..........................................*/
 		/**
-		 * Checks whether the EventDispatcher object has any listeners registered for a specific type of event. 
+		 * Checks whether the EventDispatcher object has any listeners registered for a specific type of event.
 		 * This allows you to determine where an EventDispatcher object has altered handling of an event type
 		 * in the event flow hierarchy. To determine whether a specific event type will actually trigger an
 		 * event listener, use <code>IEventDispatcher.willTrigger()</code>.
-		 * 
+		 *
 		 * <p>The difference between <code>hasEventListener()</code> and <code>willTrigger()</code> is that <code>hasEventListener()</code>
 		 * examines only the object to which it belongs, whereas <code>willTrigger()</code> examines the entire event
 		 * flow for the event specified by the type parameter.</p>
 		 */
 		public function hasEventListener(type:String):Boolean
 		{
-			return (_type && type == tagEventType) ? dispatcher.hasEventListener(_type): false;
+			return (_type && type == tagEventType) ? dispatcher.hasEventListener(_type) : false;
 		}
 		
 		/*-.........................................willTrigger..........................................*/
 		/**
 		 * Checks whether an event listener is registered with this EventDispatcher object
 		 * or any of its ancestors for the specified event type. This method returns true
-		 * if an event listener is triggered during any phase of the event flow when an 
+		 * if an event listener is triggered during any phase of the event flow when an
 		 * event of the specified type is dispatched to this EventDispatcher object or any of its descendants.
-		 * 
+		 *
 		 * <p>The difference between <code>hasEventListener()</code> and <code>willTrigger()</code> is that <code>hasEventListener()</code>
 		 * examines only the object to which it belongs, whereas <code>willTrigger()</code> examines the entire event
 		 * flow for the event specified by the type parameter.</p>
 		 */
 		public function willTrigger(type:String):Boolean
 		{
-			return (_type && type == tagEventType) ? dispatcher.hasEventListener(_type): false;
+			return (_type && type == tagEventType) ? dispatcher.hasEventListener(_type) : false;
 		}
 		
 		/*-.........................................addEventListener..........................................*/
@@ -217,14 +224,15 @@ package com.asfusion.mate.events
 		*	if that type is null we create a pending object to register it later
 		*/
 		/**
-		 * Registers an event listener object with an EventDispatcher object so that the listener receives notification of an event. 
+		 * Registers an event listener object with an EventDispatcher object so that the listener receives notification of an event.
 		 * You can register event listeners on all nodes in the display list for a specific type of event, phase, and priority.
 		 */
-		public function addEventListener(eventType:String, listener:Function, useCapture:Boolean=false, priority:int=0.0, useWeakReference:Boolean=true):void
+		public function addEventListener(eventType:String, listener:Function, useCapture:Boolean = false, priority:int = 0.0, useWeakReference:Boolean =
+			true):void
 		{
-			if(eventType == tagEventType)
+			if (eventType == tagEventType)
 			{
-				if(type)
+				if (type)
 				{
 					dispatcher.addEventListener(type, listener, useCapture, this.priority, useWeakReference);
 					mxmlRegistered = true;
@@ -235,12 +243,12 @@ package com.asfusion.mate.events
 		
 		/*-.........................................removeEventListener..........................................*/
 		/**
-		 * Removes a listener from the EventDispatcher object. If there is no matching listener registered with 
+		 * Removes a listener from the EventDispatcher object. If there is no matching listener registered with
 		 * the EventDispatcher object, a call to this method has no effect.
 		 */
-		public function removeEventListener(eventType:String, listener:Function, useCapture:Boolean=false):void
+		public function removeEventListener(eventType:String, listener:Function, useCapture:Boolean = false):void
 		{
-			if(_type && eventType == tagEventType) 
+			if (_type && eventType == tagEventType)
 				dispatcher.removeEventListener(_type, listener, useCapture);
 		}
 		
@@ -264,15 +272,15 @@ package com.asfusion.mate.events
 		protected function updateListeners(newType:String, oldType:String = null):void
 		{
 			
-			/* 
+			/*
 			*	If registered, we need to unregister before register again with new values
 			*/
-			if(oldType)
+			if (oldType)
 			{
 				/*
 				*	If a method exists we need to remove that listener
 				*/
-				if(method != null && methodRegistered)
+				if (method != null && methodRegistered)
 				{
 					dispatcher.removeEventListener(oldType, method);
 					methodRegistered = false;
@@ -280,31 +288,31 @@ package com.asfusion.mate.events
 				/*
 				*	If a mxmlFunction exists we need to remove that listener
 				*/
-				if(mxmlFunction != null && mxmlRegistered)
+				if (mxmlFunction != null && mxmlRegistered)
 				{
 					dispatcher.removeEventListener(oldType, mxmlFunction);
 					mxmlRegistered = false;
 				}
 			}
-			if(newType)
+			if (newType)
 			{
 				/*
 				*	Checking if we need to register a method  with the new type and register it if we need it
 				*/
-				if(method != null)
+				if (method != null)
 				{
-					dispatcher.addEventListener(newType, method,false, priority, useWeakReference);
+					dispatcher.addEventListener(newType, method, false, priority, useWeakReference);
 					methodRegistered = true;
 				}
 				/*
 				*	Checking if we need to register a method defined inline in the tag with the new type and register it if we need it
 				*/
-				if(mxmlFunction != null)
+				if (mxmlFunction != null)
 				{
-					dispatcher.addEventListener(newType, mxmlFunction,false, priority, useWeakReference);
+					dispatcher.addEventListener(newType, mxmlFunction, false, priority, useWeakReference);
 					mxmlRegistered = true;
 				}
 			}
 		}
 	}
-}	
+}

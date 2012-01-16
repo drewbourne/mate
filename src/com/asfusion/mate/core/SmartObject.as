@@ -29,8 +29,6 @@ package com.asfusion.mate.core
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 	
-	use namespace com.asfusion.mate.core.mate;
-	
 	[Bindable(event="propertyChange")]
 	/**
 	 * The Smart Objects can be used within the <code>IActionList</code>.

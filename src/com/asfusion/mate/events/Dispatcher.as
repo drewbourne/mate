@@ -47,10 +47,10 @@ package com.asfusion.mate.events
 	 *
 	 * @mxml
    * <p>The <code>&lt;Dispatcher&gt;</code> tag has the following tag attributes:</p>
-			* <pre>
+				  * <pre>
 	 * &lt;Dispatcher
    * <b>Properties</b>
-			  * generator="Class"
+					* generator="Class"
 	 * constructorArgs="Object|Array"
 	 * eventProperties="EventProperties"
 	 * type="String"
@@ -58,7 +58,7 @@ package com.asfusion.mate.events
 	 * cancelable="true|false"
 	 * responders="Array"
    * /&gt;
-			  * </pre>
+					* </pre>
 	 *
 	 * @see com.asfusion.mate.responses.ServiceResponseHandler
 	 * @see com.asfusion.mate.responses.ResponseHandler

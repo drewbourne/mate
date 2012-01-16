@@ -25,11 +25,11 @@ package com.asfusion.mate.events
 		
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Constructor
-		-------------------------------------------------------------------------------------------------------------*/	
-		public function InjectorSettingsEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		-------------------------------------------------------------------------------------------------------------*/
+		public function InjectorSettingsEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
 		}
-		
+	
 	}
 }

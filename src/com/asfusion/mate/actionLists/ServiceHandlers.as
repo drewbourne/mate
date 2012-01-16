@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actionLists
@@ -31,14 +31,15 @@ package com.asfusion.mate.actionLists
 	import mx.rpc.events.ResultEvent;
 	
 	use namespace mate;
+	
 	/**
-	 * A inner-action-list to run when the server call returns a result. 
-	 * Inside this <code>IActionList</code>, you can use the same tags you would in the main 
+	 * A inner-action-list to run when the server call returns a result.
+	 * Inside this <code>IActionList</code>, you can use the same tags you would in the main
 	 * body of a &lt;IActionList&gt;, including other service calls.
 	 * <p>This inner-action-list is used by the ServiceInvoker</p>
 	 */
 	public class ServiceHandlers extends EventHandlers implements IActionList
-	{	
+	{
 		
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Public Setters and Getters
@@ -46,6 +47,7 @@ package com.asfusion.mate.actionLists
 		
 		/*-.........................................token..........................................*/
 		private var _token:AsyncToken;
+		
 		/**
 		 * Generated when making asynchronous RPC operations.
 		 * The same object is available in the <code>result</code> and <code>fault</code> events in the <code>token</code> property.
@@ -62,7 +64,7 @@ package com.asfusion.mate.actionLists
 		
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Constructor
-		-------------------------------------------------------------------------------------------------------------*/	
+		-------------------------------------------------------------------------------------------------------------*/
 		/**
 		 * Constructor
 		 */
@@ -71,7 +73,7 @@ package com.asfusion.mate.actionLists
 			super();
 			this.inheritedScope = inheritedScope;
 		}
-	
+		
 		
 		/*-.........................................toString..........................................*/
 		/**
@@ -85,12 +87,12 @@ package com.asfusion.mate.actionLists
 				var inheritedEvent:Event = inheritedScope.event;
 				eType = inheritedEvent.type;
 			}
-			catch( e:Error)
+			catch (e:Error)
 			{
 				eType = type;
 			}
-			var str:String = "EventType:"+ eType + ". Error was found in a ServiceHandlers list in file "
-							+  DebuggerUtil.getClassName(document);
+			var str:String = "EventType:" + eType + ". Error was found in a ServiceHandlers list in file "
+				+ DebuggerUtil.getClassName(document);
 			return str;
 		}
 		
@@ -99,28 +101,28 @@ package com.asfusion.mate.actionLists
 		 * @inheritDoc
 		 */
 		override protected function fireEvent(event:Event):void
-		{	
-			if(AbstractEvent(event).token == token) 
+		{
+			if (AbstractEvent(event).token == token)
 			{
-				if(actions && actions.length > 0)
+				if (actions && actions.length > 0)
 				{
 					var currentScope:ServiceScope = new ServiceScope(inheritedScope.event, debug, inheritedScope);
 					currentScope.owner = this;
-				
-					if(event is FaultEvent)
+					
+					if (event is FaultEvent)
 					{
-						currentScope.fault  = FaultEvent(event).fault;
+						currentScope.fault = FaultEvent(event).fault;
 					}
-					if(event is ResultEvent)
+					if (event is ResultEvent)
 					{
-						currentScope.result  = ResultEvent(event).result;
+						currentScope.result = ResultEvent(event).result;
 					}
 					
 					
 					setScope(currentScope);
 					runSequence(currentScope, actions);
 				}
-				else if(event is FaultEvent)
+				else if (event is FaultEvent)
 				{
 					var faultEvent:UnhandledFaultEvent = new UnhandledFaultEvent(UnhandledFaultEvent.FAULT);
 					faultEvent.fault = FaultEvent(event).fault;

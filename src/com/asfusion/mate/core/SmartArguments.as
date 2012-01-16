@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.core
@@ -26,7 +26,7 @@ package com.asfusion.mate.core
 	 * and returns an Array with simple Objects
 	 */
 	public class SmartArguments
-	{	
+	{
 		
 		//-----------------------------------------------------------------------------------------------------------
 		//                                           Public Methods
@@ -38,15 +38,15 @@ package com.asfusion.mate.core
 		public function getRealArguments(scope:IScope, parameters:*):Array
 		{
 			var realArguments:Array;
-			if(parameters is Array)
+			if (parameters is Array)
 			{
-				if( scope )
+				if (scope)
 				{
 					realArguments = new Array();
-					for each( var argument:Object in parameters )
+					for each (var argument:Object in parameters)
 					{
-						argument = ( argument is ISmartObject ) ? ISmartObject( argument ).getValue( scope ) : argument;	
-						realArguments.push( argument );
+						argument = (argument is ISmartObject) ? ISmartObject(argument).getValue(scope) : argument;
+						realArguments.push(argument);
 					}
 				}
 				else
@@ -56,11 +56,11 @@ package com.asfusion.mate.core
 			}
 			else if (parameters !== undefined)
 			{
-				var soloArgument:Object = ( scope && parameters is ISmartObject ) ? ISmartObject(parameters).getValue(scope) : parameters;
-				realArguments =[soloArgument];
+				var soloArgument:Object = (scope && parameters is ISmartObject) ? ISmartObject(parameters).getValue(scope) : parameters;
+				realArguments = [ soloArgument ];
 			}
 			return realArguments;
 		}
-
+	
 	}
 }

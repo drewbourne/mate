@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions.builders
@@ -26,13 +26,13 @@ package com.asfusion.mate.actions.builders
 	import flash.events.IEventDispatcher;
 	
 	/**
-	 * AsyncMethodInvoker allows to calling an asynchronous function specified in the <code>method</code> 
-	 * attribute on the newly created <code>EventDispatcher</code> object or in the instance if that is provided. 
-	 * Because the method is asynchronous, we register to a success and falut events in this object and run the 
-	 * successHandlers or faultHandlers depending of the result. When you are making the asynchronous call, 
-	 * you can pass arguments to this function that come from a variety of sources, such as the event itself, 
-	 * a server result object, or any other value.Unless you specify cache="none", this <code>AsyncMethodInvoker</code> 
-	 * instance will be "cached" and not instantiated again. If you are using an instace we never generate the 
+	 * AsyncMethodInvoker allows to calling an asynchronous function specified in the <code>method</code>
+	 * attribute on the newly created <code>EventDispatcher</code> object or in the instance if that is provided.
+	 * Because the method is asynchronous, we register to a success and falut events in this object and run the
+	 * successHandlers or faultHandlers depending of the result. When you are making the asynchronous call,
+	 * you can pass arguments to this function that come from a variety of sources, such as the event itself,
+	 * a server result object, or any other value.Unless you specify cache="none", this <code>AsyncMethodInvoker</code>
+	 * instance will be "cached" and not instantiated again. If you are using an instace we never generate the
 	 * object and use the same instance.
 	 */
 	public class AsyncMethodInvoker extends MethodInvoker
@@ -57,11 +57,12 @@ package com.asfusion.mate.actions.builders
 		-------------------------------------------------------------------------------------------------------------*/
 		/*-.........................................successHandlers..........................................*/
 		private var _successHandlers:Array;
+		
 		/**
-		 * A set of inner-handlers to run when the call returns a <em>success</em>. Inside this inner-handlers, 
+		 * A set of inner-handlers to run when the call returns a <em>success</em>. Inside this inner-handlers,
 		 * you can use the same tags you would in the main body of a <code>IActionList</code>,
 		 * including service calls.
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get successHandlers():Array
@@ -77,6 +78,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................successType..........................................*/
 		private var _successType:String;
+		
 		/**
 		 * Event type that will be used to register to the success event.
 		 */
@@ -92,6 +94,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................faultType..........................................*/
 		private var _faultType:String;
+		
 		/**
 		 * Event type that will be used to register to the fault event.
 		 */
@@ -107,11 +110,12 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................faultHandlers..........................................*/
 		private var _faultHandlers:Array;
+		
 		/**
-		 * A set of inner-handlers to run when the call returns a <em>fault</em>. Inside this inner-handlers, 
+		 * A set of inner-handlers to run when the call returns a <em>fault</em>. Inside this inner-handlers,
 		 * you can use the same tags you would in the main body of a <code>IActionList</code>,
 		 * including service calls.
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get faultHandlers():Array
@@ -127,17 +131,19 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................debug..........................................*/
 		private var _debug:Boolean;
+		
 		/**
-		 * Whether to show debugging information for its <em>inner-handlers</em>s. If true, 
-		 * console output will show debugging information for all <em>inner-handlers</em> 
+		 * Whether to show debugging information for its <em>inner-handlers</em>s. If true,
+		 * console output will show debugging information for all <em>inner-handlers</em>
 		 * (resultHandlers and faultHandlers)
-		 * 
+		 *
 		 * @default false
 		 */
 		public function get debug():Boolean
 		{
 			return _debug;
 		}
+		
 		[Inspectable(enumeration="true,false")]
 		public function set debug(value:Boolean):void
 		{
@@ -146,15 +152,17 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................innerHandlersClass..........................................*/
 		private var _innerHandlersClass:Class = EventHandlers;
+		
 		/**
 		 * Class that is used as a template to create the inner-handlers
-		 * 
+		 *
 		 * @default EventHandlers
 		 */
 		public function get innerHandlersClass():Class
 		{
 			return _innerHandlersClass;
 		}
+		
 		public function set innerHandlersClass(value:Class):void
 		{
 			_innerHandlersClass = value;
@@ -162,17 +170,18 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................instance..........................................*/
 		/**
-		 * If this property is null, a new object instance is created on 
+		 * If this property is null, a new object instance is created on
 		 * the <code>prepare</code> method. Otherwise, this instance will be used.
 		 * The class that will be used to create the instance if none is provided is
 		 * the one specified in the generetor property.
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get instance():IEventDispatcher
 		{
 			return currentInstance;
 		}
+		
 		public function set instance(value:IEventDispatcher):void
 		{
 			currentInstance = value;
@@ -190,26 +199,27 @@ package com.asfusion.mate.actions.builders
 			super.prepare(scope);
 			currentIndex++;
 		}
+		
 		/*-.........................................run..........................................*/
 		/**
 		 * @inheritDoc
 		 */
 		override protected function run(scope:IScope):void
 		{
-			if(successHandlers && successType)
+			if (successHandlers && successType)
 			{
-				var successHandlersInstance:IActionList = createInnerHandlers(scope,  
-																				successType, 
-																				successHandlers, 
-																				currentInstance);
+				var successHandlersInstance:IActionList = createInnerHandlers(scope,
+					successType,
+					successHandlers,
+					currentInstance);
 				successHandlersInstance.validateNow();
 			}
-			if(faultType && faultHandlers)
+			if (faultType && faultHandlers)
 			{
-				var faultHandlersInstance:IActionList = createInnerHandlers(scope,  
-																				faultType, 
-																				faultHandlers, 
-																				currentInstance); 
+				var faultHandlersInstance:IActionList = createInnerHandlers(scope,
+					faultType,
+					faultHandlers,
+					currentInstance);
 				faultHandlersInstance.validateNow();
 			}
 			super.run(scope);
@@ -223,12 +233,12 @@ package com.asfusion.mate.actions.builders
 		/**
 		 * Creates IActionList and sets the properties:
 		 * debug, type, listeners, dispatcher and inheritScope in the newly IActionList (inner-handlers).
-		 * 
+		 *
 		 */
-		protected function createInnerHandlers(scope:IScope,  
-											innerType:String, 
-											actionList:Array,
-											innerDispatcher:IEventDispatcher):IActionList
+		protected function createInnerHandlers(scope:IScope,
+			innerType:String,
+			actionList:Array,
+			innerDispatcher:IEventDispatcher):IActionList
 		{
 			var innerHandlers:IActionList = new innerHandlersClass();
 			innerHandlers.setInheritedScope(scope);
@@ -236,13 +246,13 @@ package com.asfusion.mate.actions.builders
 			innerHandlers.actions = actionList;
 			innerHandlers.initialized(document, null);
 			
-			if(innerHandlers is EventHandlers)
+			if (innerHandlers is EventHandlers)
 			{
 				EventHandlers(innerHandlers).type = innerType;
 			}
 			
-			var siblings:Array =  innerHandlersList[currentIndex];
-			if(siblings == null)
+			var siblings:Array = innerHandlersList[currentIndex];
+			if (siblings == null)
 			{
 				siblings = new Array();
 				innerHandlersList[currentIndex] = siblings;
@@ -261,11 +271,11 @@ package com.asfusion.mate.actions.builders
 		 */
 		protected function actionListStartHandler(event:ActionListEvent):void
 		{
-			if(event.target is IActionList)
+			if (event.target is IActionList)
 			{
 				var innerHandlers:IActionList = IActionList(event.target);
 				var siblings:Array = innerHandlersList[innerHandlers.getGroupId()];
-				for each(var handlers:IActionList in siblings)
+				for each (var handlers:IActionList in siblings)
 				{
 					handlers.removeEventListener(ActionListEvent.START, actionListStartHandler);
 					handlers.clearReferences();

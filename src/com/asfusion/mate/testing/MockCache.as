@@ -12,13 +12,14 @@ package com.asfusion.mate.testing
 		/**
 		 * @todo
 		 */
-		public static function getInstance( generator:Class, cache:Boolean ):*
+		public static function getInstance(generator:Class, cache:Boolean):*
 		{
 			var instance:* = cacheCollection[generator];
-			if( !instance || !cache )
+			if (!instance || !cache)
 			{
 				instance = new generator();
-				if(cache) cacheCollection[generator] = instance;
+				if (cache)
+					cacheCollection[generator] = instance;
 			}
 			return instance;
 		}

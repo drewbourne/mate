@@ -32,17 +32,17 @@ package com.asfusion.mate.events
 		/**
 		 * Provides access to the root cause of the failure, if one exists.
 		 */
-		 public var rootCause:Object;
-		 
-		 /**
-		 * The ErrorMessage for this event.
-		 */
-		 public var message:ErrorMessage;
+		public var rootCause:Object;
 		
-		public function UnhandledMessageFaultEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		/**
+		* The ErrorMessage for this event.
+		*/
+		public var message:ErrorMessage;
+		
+		public function UnhandledMessageFaultEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
 		}
-		
+	
 	}
 }

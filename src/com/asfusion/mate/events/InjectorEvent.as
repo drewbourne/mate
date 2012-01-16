@@ -33,18 +33,19 @@ package com.asfusion.mate.events
 		/**
 		 * Constructor
 		 */
-		public function InjectorEvent(type:String, target:Object, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function InjectorEvent(type:String, target:Object, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			injectorTarget = target;
-			if(target.hasOwnProperty("id"))
+			if (target.hasOwnProperty("id"))
 			{
 				uid = target["id"];
 			}
 			
-			if( !type ) type = getQualifiedClassName(target);
-				
+			if (!type)
+				type = getQualifiedClassName(target);
+			
 			super(type, bubbles, cancelable);
 		}
-		
+	
 	}
 }

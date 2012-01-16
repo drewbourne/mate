@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Darron Schall, Principal Architect
-        http://www.darronschall.com/
-                
+		http://www.darronschall.com/
+
 @ignore
 */
 
@@ -38,7 +38,7 @@ package com.asfusion.mate.testing
 	{
 		/**
 		 * Class to instantiate that will generate the mock result.
-		 * This attribute needs to be supplied here or in the individual MockMethod tags. 
+		 * This attribute needs to be supplied here or in the individual MockMethod tags.
 		 */
 		public var mockGenerator:Class;
 		
@@ -51,7 +51,7 @@ package com.asfusion.mate.testing
 		/**
 		 * @todo
 		 */
-		public var cache:Boolean =  true;
+		public var cache:Boolean = true;
 		
 		/**
 		 * If true, a busy cursor is displayed while a service is executing.
@@ -75,113 +75,113 @@ package com.asfusion.mate.testing
 		/**
 		 * @private
 		 */
-		override flash_proxy function getProperty( name:* ):*
+		override flash_proxy function getProperty(name:*):*
 		{
 			// We want to return the actual function reference here, so we 
 			// use ["send"] syntex to avoid compiler (when using .send syntax)
-			return getOperation( name )[ "send" ];
+			return getOperation(name)["send"];
 		}
-	
+		
 		/**
 		 * @private
 		 */
-		override flash_proxy function setProperty( name:*, value:* ):void
+		override flash_proxy function setProperty(name:*, value:*):void
 		{
-			throw new Error( "Cannot set " + name + " in MockDelegate" );
+			throw new Error("Cannot set " + name + " in MockDelegate");
 		}
-	
+		
 		/**
 		 * @private
 		 */
 		override flash_proxy function callProperty(name:*, ... args:Array):*
 		{
-			return getOperation( name ).send.apply( null, args );
+			return getOperation(name).send.apply(null, args);
 		}
 		
-		override flash_proxy function hasProperty( name:* ):Boolean
+		override flash_proxy function hasProperty(name:*):Boolean
 		{
 			// Return true only if the method name exists in the mockGenerator class
-			return new mockGenerator().hasOwnProperty( name );
+			return new mockGenerator().hasOwnProperty(name);
 		}
-
+		
 		//---------------------------------
 		//   EventDispatcher methods
 		//---------------------------------
-	
+		
 		/**
 		 * @private
 		 */
-		public function addEventListener( type:String, listener:Function,
-											useCapture:Boolean = false, priority:int = 0, 
-											useWeakReference:Boolean = false ):void
+		public function addEventListener(type:String, listener:Function,
+			useCapture:Boolean = false, priority:int = 0,
+			useWeakReference:Boolean = false):void
 		{
-			eventDispatcher.addEventListener( type, listener, useCapture, priority, useWeakReference );
-		}
-	
-		/**
-		 * @private
-		 */
-		public function dispatchEvent( event:Event ):Boolean
-		{
-			return eventDispatcher.dispatchEvent( event );
-		}
-	
-		/**
-		 * @private
-		 */
-		public function removeEventListener( type:String, listener:Function, useCapture:Boolean = false ):void
-		{
-			eventDispatcher.removeEventListener( type, listener, useCapture );
-		}
-	
-		/**
-		 * @private
-		 */
-		public function hasEventListener( type:String ):Boolean
-		{
-			return eventDispatcher.hasEventListener( type );
+			eventDispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 		
 		/**
 		 * @private
 		 */
-		public function willTrigger( type:String ):Boolean
+		public function dispatchEvent(event:Event):Boolean
 		{
-			return eventDispatcher.willTrigger( type );
+			return eventDispatcher.dispatchEvent(event);
 		}
 		
-
+		/**
+		 * @private
+		 */
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
+		{
+			eventDispatcher.removeEventListener(type, listener, useCapture);
+		}
+		
+		/**
+		 * @private
+		 */
+		public function hasEventListener(type:String):Boolean
+		{
+			return eventDispatcher.hasEventListener(type);
+		}
+		
+		/**
+		 * @private
+		 */
+		public function willTrigger(type:String):Boolean
+		{
+			return eventDispatcher.willTrigger(type);
+		}
+		
+		
 		/**
 		 * Constructor
 		 */
 		public function MockDelegate()
 		{
-			eventDispatcher = new EventDispatcher( this );
+			eventDispatcher = new EventDispatcher(this);
 			operationsDictionary = new Dictionary();
 		}
 		
 		/**
 		 * @todo
 		 */
-		public function getOperation( name:String ):AbstractOperation
-		{   
-			if ( operationsDictionary[ name ] == null )
+		public function getOperation(name:String):AbstractOperation
+		{
+			if (operationsDictionary[name] == null)
 			{
-				var operation:MockOperation = new MockOperation( name, getMethod( name ), showBusyCursor );
+				var operation:MockOperation = new MockOperation(name, getMethod(name), showBusyCursor);
 				// add fault and result listeners
-				operation.addEventListener( ResultEvent.RESULT, dispatchResult, false, EventPriority.DEFAULT, true );
-				operation.addEventListener( FaultEvent.FAULT, dispatchFault, false, EventPriority.DEFAULT, true );
+				operation.addEventListener(ResultEvent.RESULT, dispatchResult, false, EventPriority.DEFAULT, true);
+				operation.addEventListener(FaultEvent.FAULT, dispatchFault, false, EventPriority.DEFAULT, true);
 				
-				operationsDictionary[ name ] = operation;
+				operationsDictionary[name] = operation;
 			}
 			
-			return AbstractOperation( operationsDictionary[ name ] );
+			return AbstractOperation(operationsDictionary[name]);
 		}
 		
 		/**
 		 * @todo
 		 */
-		protected function getMethod( name:String ):MockMethod
+		protected function getMethod(name:String):MockMethod
 		{
 			var method:MockMethod = new MockMethod();
 			method.name = name;
@@ -196,16 +196,16 @@ package com.asfusion.mate.testing
 		// These two functions dispatch the result and fault events
 		// that trigger the inner handlers
 		// -------------------------------
-		protected function dispatchResult( event:ResultEvent ):void 
+		protected function dispatchResult(event:ResultEvent):void
 		{
-			dispatchEvent( ResultEvent.createEvent( event.result, event.token ) );
+			dispatchEvent(ResultEvent.createEvent(event.result, event.token));
 		}
 		
 		// -------------------------------
-		protected function dispatchFault( event:FaultEvent ):void 
+		protected function dispatchFault(event:FaultEvent):void
 		{
-			dispatchEvent( FaultEvent.createEvent( event.fault, event.token ) );
+			dispatchEvent(FaultEvent.createEvent(event.fault, event.token));
 		}
-
+	
 	}
 }

@@ -57,16 +57,16 @@ package com.asfusion.mate.actions.builders
 	*
 	* @mxml
   * <p>The <code>&lt;EventAnnouncer&gt;</code> tag has the following tag attributes:</p>
-	  * <pre>
+		  * <pre>
 	* &lt;EventAnnouncer
   * <b>Properties</b>
-		* generator="Class"
+			* generator="Class"
 	* constructorArguments="Object|Array"
 	* type="String"
 	* bubbles="true|false"
 	* cancelable="true|false"
   * /&gt;
-		* </pre>
+			* </pre>
 	*
 	* @see com.asfusion.mate.actionLists.EventHandlers
 	*/

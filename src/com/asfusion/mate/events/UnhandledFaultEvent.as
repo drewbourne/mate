@@ -5,7 +5,7 @@ package com.asfusion.mate.events
 	import mx.messaging.messages.IMessage;
 	import mx.rpc.AsyncToken;
 	import mx.rpc.Fault;
-
+	
 	/**
 	 * The event that is dispatched where there are no <code>faultHandlers</code> inside a service tag such as
 	 * <code>RemoteObjectInvoker</code>,  <code>WebServiceObjectInvoker</code>,  <code>HTTPServiceObjectInvoker</code>
@@ -42,7 +42,7 @@ package com.asfusion.mate.events
 		 */
 		public var messageId:String;
 		
-		public function UnhandledFaultEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function UnhandledFaultEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
 		}

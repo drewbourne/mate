@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions
@@ -29,7 +29,7 @@ package com.asfusion.mate.actions
 	
 	/**
 	 * AbstractServiceInvoker is the base class for all the <code>IAction</code> that have inner-handlers/actions.
-	 * 
+	 *
 	 * <p>This class has 2 inner-handlers <code>resultHandlers</code> and <code>faultHandlers</code>, but
 	 * it provides the ability to have more by creating new inner-handlers with the method <code>createInnerHandlers</code>.</p>
 	 */
@@ -37,14 +37,14 @@ package com.asfusion.mate.actions
 	{
 		
 		/**
-		 * Dispatcher that will trigger the inner-handlers execution by 
+		 * Dispatcher that will trigger the inner-handlers execution by
 		 * dispatching events (ie: ResultEvent or FaultEvent).
 		 */
 		protected var innerHandlersDispatcher:IEventDispatcher;
 		
 		/**
 		 * Class that is used as a template to create the inner-handlers
-		 * 
+		 *
 		 * @default EventHandlers
 		 */
 		protected var innerHandlersClass:Class = EventHandlers;
@@ -56,8 +56,8 @@ package com.asfusion.mate.actions
 		
 		/**
 		 * When auto unregistration is true, all inner handlers will be
-   		 * unregistered after the first inner handlers fires.
-		 */
+	 * unregistered after the first inner handlers fires.
+		   */
 		protected var autoUnregistration:Boolean = true;
 		
 		/**
@@ -71,11 +71,12 @@ package com.asfusion.mate.actions
 		
 		/*-.........................................resultHandlers..........................................*/
 		private var _resultHandlers:Array;
+		
 		/**
-		 * A set of inner-handlers to run when the server call returns a <em>result</em>. Inside this inner-handlers, 
+		 * A set of inner-handlers to run when the server call returns a <em>result</em>. Inside this inner-handlers,
 		 * you can use the same tags you would in the main body of a <code>IActionList</code>,
 		 * including other service calls.
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get resultHandlers():Array
@@ -92,11 +93,12 @@ package com.asfusion.mate.actions
 		
 		/*-.........................................faultHandlers..........................................*/
 		private var _faultHandlers:Array;
+		
 		/**
-		 * A set of inner-handlers to run when the server call returns a <em>fault</em>. Inside this inner-handlers, 
+		 * A set of inner-handlers to run when the server call returns a <em>fault</em>. Inside this inner-handlers,
 		 * you can use the same tags you would in the main body of a <code>IActionList</code>,
 		 * including other service calls.
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get faultHandlers():Array
@@ -112,17 +114,19 @@ package com.asfusion.mate.actions
 		
 		/*-.........................................debug..........................................*/
 		private var _debug:Boolean;
+		
 		/**
-		 * Whether to show debugging information for its <em>inner-handlers</em>s. If true, 
-		 * console output will show debugging information for all <em>inner-handlers</em> 
+		 * Whether to show debugging information for its <em>inner-handlers</em>s. If true,
+		 * console output will show debugging information for all <em>inner-handlers</em>
 		 * (resultHandlers and faultHandlers)
-		 * 
+		 *
 		 * @default false
 		 */
 		public function get debug():Boolean
 		{
 			return _debug;
 		}
+		
 		[Inspectable(enumeration="true,false")]
 		public function set debug(value:Boolean):void
 		{
@@ -140,7 +144,7 @@ package com.asfusion.mate.actions
 		{
 			currentIndex++;
 		}
-
+		
 		
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Protected methods
@@ -150,12 +154,12 @@ package com.asfusion.mate.actions
 		/**
 		 * Creates IActionList and sets the properties:
 		 * debug, type, listeners, dispatcher and inheritScope in the newly IActionList (inner-handlers).
-		 * 
+		 *
 		 */
-		protected function createInnerHandlers(scope:IScope,  
-											innerType:String, 
-											actionList:Array, 
-											innerHandlersClass:Class = null):IActionList
+		protected function createInnerHandlers(scope:IScope,
+			innerType:String,
+			actionList:Array,
+			innerHandlersClass:Class = null):IActionList
 		{
 			var innerHandlers:IActionList = (innerHandlersClass != null) ? new innerHandlersClass() : new this.innerHandlersClass();
 			innerHandlers.setInheritedScope(scope);
@@ -163,14 +167,14 @@ package com.asfusion.mate.actions
 			innerHandlers.actions = actionList;
 			innerHandlers.initialized(document, null);
 			
-			if(innerHandlers is EventHandlers)
+			if (innerHandlers is EventHandlers)
 			{
 				EventHandlers(innerHandlers).type = innerType;
 			}
-			if(autoUnregistration)
+			if (autoUnregistration)
 			{
-				var siblings:Array =  innerHandlersList[currentIndex];
-				if(siblings == null)
+				var siblings:Array = innerHandlersList[currentIndex];
+				if (siblings == null)
 				{
 					siblings = new Array();
 					innerHandlersList[currentIndex] = siblings;
@@ -189,11 +193,11 @@ package com.asfusion.mate.actions
 		 */
 		protected function actionListStartHandler(event:ActionListEvent):void
 		{
-			if(event.target is IActionList)
+			if (event.target is IActionList)
 			{
 				var innerHandlers:IActionList = IActionList(event.target);
 				var siblings:Array = innerHandlersList[innerHandlers.getGroupId()];
-				for each(var handlers:IActionList in siblings)
+				for each (var handlers:IActionList in siblings)
 				{
 					handlers.removeEventListener(ActionListEvent.START, actionListStartHandler);
 					handlers.clearReferences();

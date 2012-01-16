@@ -203,6 +203,7 @@ package com.asfusion.mate.actionLists
 					currentDispatcher = map.getDispatcher();
 				}
 			}
+			
 			return currentDispatcher;
 		}
 		

@@ -2,9 +2,9 @@ package com.asfusion.mate.ioc
 {
 	import flash.events.EventDispatcher;
 	import mx.core.IMXMLObject;
-
+	
 	[Exclude(name="activate", kind="event")]
-    [Exclude(name="deactivate", kind="event")]
+	[Exclude(name="deactivate", kind="event")]
 	public class InjectorTarget extends EventDispatcher implements IMXMLObject
 	{
 		/*-----------------------------------------------------------------------------------------------------------

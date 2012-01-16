@@ -11,15 +11,15 @@ package com.asfusion.mate.utils.debug
 		 * Returns a string with only the class name and without the full path.
 		 */
 		public static function getClassName(object:Object):String
-	    {
-	    	var name:String = getQualifiedClassName(object);
-	        
-	        // If there is a package name, strip it off.
-	        var index:int = name.indexOf("::");
-	        if (index != -1)
-	            name = name.substr(index + 2);
-	                
-	        return name;
-	    }
+		{
+			var name:String = getQualifiedClassName(object);
+			
+			// If there is a package name, strip it off.
+			var index:int = name.indexOf("::");
+			if (index != -1)
+				name = name.substr(index + 2);
+			
+			return name;
+		}
 	}
 }

@@ -1,20 +1,20 @@
 /*
 Copyright 2008 Nahuel Foronda/AsFusion
 
-Licensed under the Apache License, Version 2.0 (the "License"); 
+Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. Y
 ou may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, s
-oftware distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+oftware distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License
 
 Author: Nahuel Foronda, Principal Architect
-        nahuel at asfusion dot com
-                
+		nahuel at asfusion dot com
+
 @ignore
 */
 package com.asfusion.mate.actions.builders
@@ -28,12 +28,13 @@ package com.asfusion.mate.actions.builders
 	import mx.rpc.AsyncToken;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
+	
 	/**
 	 * ServiceInvoker is the base class for the following service actions:
 	 * <ul><li>RemoteObjectInvoker</li>
 	 * <li>HTTPServiceInvoker</li>
 	 * <li>WebServiceInvoker</li></ul>
-	 * 
+	 *
 	 * @see com.asfusion.mate.actions.builders.RemoteObjectInvoker
 	 * @see com.asfusion.mate.actions.builders.HTTPServiceInvoker
 	 * @see com.asfusion.mate.actions.builders.WebServiceInvoker
@@ -63,13 +64,14 @@ package com.asfusion.mate.actions.builders
 		/*-----------------------------------------------------------------------------------------------------------
 		*                                          Public Setters and Getters
 		-------------------------------------------------------------------------------------------------------------*/
-			
+		
 		/*-.........................................method..........................................*/
 		private var _method:Object;
+		
 		/**
 		 * The <code>method</code> attribute specifies what function to call on the service instance.
 		 * It can be a SmartObject or String
-		 * 
+		 *
 		 * @default null
 		 */
 		public function get method():Object
@@ -84,15 +86,17 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................makeObjectsBindable..........................................*/
 		private var _makeObjectsBindable:Boolean = true;
+		
 		/**
 		 * When this value is true, anonymous objects returned are forced to bindable objects.
-		 * 
+		 *
 		 * @default true
 		 */
 		public function get makeObjectsBindable():Boolean
 		{
 			return _makeObjectsBindable;
 		}
+		
 		public function set makeObjectsBindable(value:Boolean):void
 		{
 			_makeObjectsBindable = value;
@@ -102,6 +106,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................channelSet..........................................*/
 		private var _channelSet:ChannelSet;
+		
 		/**
 		 * Provides access to the ChannelSet used by the service. The ChannelSet can be manually constructed and assigned,
 		 * or it will be dynamically created to use the configured Channels for the <code>destination</code> for this service.
@@ -110,6 +115,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return _channelSet;
 		}
+		
 		public function set channelSet(value:ChannelSet):void
 		{
 			_channelSet = value;
@@ -118,6 +124,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................requestTimeout..........................................*/
 		private var _requestTimeout:int;
+		
 		/**
 		 * Provides access to the request timeout in seconds for sent messages. A value less than or equal to zero prevents request timeout.
 		 */
@@ -125,7 +132,8 @@ package com.asfusion.mate.actions.builders
 		{
 			return _requestTimeout;
 		}
-		public function set requestTimeout(value:int):void 
+		
+		public function set requestTimeout(value:int):void
 		{
 			_requestTimeout = value;
 			requestTimeoutChanged = true;
@@ -133,6 +141,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................destination..........................................*/
 		private var _destination:String;
+		
 		/**
 		 * The destination of the service. This value should match a destination entry in the services-config.xml file.
 		 */
@@ -141,14 +150,15 @@ package com.asfusion.mate.actions.builders
 			return _destination;
 		}
 		
-		public function set destination(value:String):void 
+		public function set destination(value:String):void
 		{
 			_destination = value;
 		}
 		
-    
+		
 		/*-.........................................username..........................................*/
 		private var _username:Object;
+		
 		/**
 		 * Username to supply to <code>setCredentials</code> method
 		 */
@@ -156,6 +166,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return _username;
 		}
+		
 		public function set username(value:Object):void
 		{
 			_username = value;
@@ -164,6 +175,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................password..........................................*/
 		private var _password:Object;
+		
 		/**
 		 * Password to supply to <code>setCredentials</code> method
 		 */
@@ -171,6 +183,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return _password;
 		}
+		
 		public function set password(value:Object):void
 		{
 			_password = value;
@@ -179,6 +192,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................remoteUsername..........................................*/
 		private var _remoteUsername:Object;
+		
 		/**
 		 * Username to supply to <code>setCredentials</code> method
 		 */
@@ -186,6 +200,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return _remoteUsername;
 		}
+		
 		public function set remoteUsername(value:Object):void
 		{
 			_remoteUsername = value;
@@ -194,6 +209,7 @@ package com.asfusion.mate.actions.builders
 		
 		/*-.........................................remotePassword..........................................*/
 		private var _remotePassword:Object;
+		
 		/**
 		 * Password to supply to <code>setCredentials</code> method
 		 */
@@ -201,6 +217,7 @@ package com.asfusion.mate.actions.builders
 		{
 			return _remotePassword;
 		}
+		
 		public function set remotePassword(value:Object):void
 		{
 			_remotePassword = value;
@@ -218,21 +235,21 @@ package com.asfusion.mate.actions.builders
 		{
 			innerHandlersDispatcher = currentInstance;
 			
-			if(resultHandlers && resultHandlers.length > 0)
+			if (resultHandlers && resultHandlers.length > 0)
 			{
-				var resultHandlersInstance:ServiceHandlers = createInnerHandlers(scope,  
-																				ResultEvent.RESULT, 
-																				resultHandlers, 
-																				ServiceHandlers)  as ServiceHandlers;
+				var resultHandlersInstance:ServiceHandlers = createInnerHandlers(scope,
+					ResultEvent.RESULT,
+					resultHandlers,
+					ServiceHandlers) as ServiceHandlers;
 				resultHandlersInstance.token = token;
 				resultHandlersInstance.validateNow();
 			}
-			if( (faultHandlers && faultHandlers.length > 0) || scope.dispatcher.hasEventListener(UnhandledFaultEvent.FAULT))
+			if ((faultHandlers && faultHandlers.length > 0) || scope.dispatcher.hasEventListener(UnhandledFaultEvent.FAULT))
 			{
-				var faultHandlersInstance:ServiceHandlers = createInnerHandlers(scope,  
-																				FaultEvent.FAULT, 
-																				faultHandlers, 
-																				ServiceHandlers)  as ServiceHandlers; 
+				var faultHandlersInstance:ServiceHandlers = createInnerHandlers(scope,
+					FaultEvent.FAULT,
+					faultHandlers,
+					ServiceHandlers) as ServiceHandlers;
 				faultHandlersInstance.token = token;
 				faultHandlersInstance.validateNow();
 			}

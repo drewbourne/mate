@@ -8,8 +8,8 @@ package com.asfusion.mate.actions
 	/**
 	 * Allows calling an inline function (a function defined in the event map)
 	 * or calling a static function in any class.
-	 * You can pass arguments to this function that come from a variety of sources, such as the event itself, 
-	`* a server result object, or any other value. 
+	 * You can pass arguments to this function that come from a variety of sources, such as the event itself,
+	`* a server result object, or any other value.
 	 */
 	public class InlineInvoker extends AbstractAction implements IAction
 	{
@@ -21,13 +21,13 @@ package com.asfusion.mate.actions
 		private var _arguments:* = undefined;
 		
 		/**
-		*  The property <code>arguments</code> allows you to pass an Object or an Array of objects when calling 
+		*  The property <code>arguments</code> allows you to pass an Object or an Array of objects when calling
 		 * the function defined in the property <code>method</code> .
-		*  <p>You can use an array to pass multiple arguments or use a simple Object if the signature of the 
+		*  <p>You can use an array to pass multiple arguments or use a simple Object if the signature of the
 		 * <code>method</code> has only one parameter.</p>
-		* 
+		*
 		*  @default undefined
-		*/ 
+		*/
 		public function get arguments():*
 		{
 			return _arguments;
@@ -41,6 +41,7 @@ package com.asfusion.mate.actions
 		
 		/*-.........................................method..........................................*/
 		private var _method:Function;
+		
 		/**
 		 * The function to call on the created object.
 		 *
@@ -66,7 +67,7 @@ package com.asfusion.mate.actions
 		 */
 		override protected function run(scope:IScope):void
 		{
-			if(method != null)
+			if (method != null)
 			{
 				var logInfo:LogInfo;
 				var argumentList:Array = (new SmartArguments()).getRealArguments(scope, this.arguments);
@@ -74,20 +75,20 @@ package com.asfusion.mate.actions
 				{
 					scope.lastReturn = method.apply(null, argumentList);
 				}
-				catch(error:ArgumentError)
+				catch (error:ArgumentError)
 				{
-					logInfo =  new LogInfo( scope, null,  error, null, argumentList);
-					scope.getLogger().error(LogTypes.ARGUMENT_ERROR,logInfo);
+					logInfo = new LogInfo(scope, null, error, null, argumentList);
+					scope.getLogger().error(LogTypes.ARGUMENT_ERROR, logInfo);
 				}
-				catch(error:TypeError)
+				catch (error:TypeError)
 				{
-					logInfo =  new LogInfo( scope, null, error, null , argumentList);
+					logInfo = new LogInfo(scope, null, error, null, argumentList);
 					scope.getLogger().error(LogTypes.TYPE_ERROR, logInfo);
 				}
 			}
 			else
 			{
-				logInfo = new LogInfo( scope, null, null, null, argumentList);
+				logInfo = new LogInfo(scope, null, null, null, argumentList);
 				scope.getLogger().error(LogTypes.METHOD_UNDEFINED, logInfo);
 			}
 		}
