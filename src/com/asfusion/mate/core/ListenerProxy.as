@@ -53,15 +53,15 @@ package com.asfusion.mate.core
 		 */
 		protected function get dispatcher():IEventDispatcher
 		{
-			var weekDispatcher:IEventDispatcher;
+			var weakDispatcher:IEventDispatcher;
 			for (var i:* in dispatcherHolder)
 			{
 				if (i is IEventDispatcher)
 				{
-					weekDispatcher = i;
+					weakDispatcher = i;
 				}
 			}
-			return weekDispatcher;
+			return weakDispatcher;
 		}
 		
 		protected function set dispatcher(value:IEventDispatcher):void
@@ -99,19 +99,19 @@ package com.asfusion.mate.core
 			if (registered && (this.type == type))
 				return;
 			
-			var weekDispatcher:IEventDispatcher = dispatcher;
+			var weakDispatcher:IEventDispatcher = dispatcher;
 			
 			if (this.type != type && registered)
 			{
 				removeListener(this.type);
 			}
 			
-			weekDispatcher.addEventListener(type, listenerProxyHandler, true, 1, true);
-			weekDispatcher.addEventListener(type, listenerProxyHandler, false, 1, true);
+			weakDispatcher.addEventListener(type, listenerProxyHandler, true, 1, true);
+			weakDispatcher.addEventListener(type, listenerProxyHandler, false, 1, true);
 			
-			if (weekDispatcher is GlobalDispatcher)
+			if (weakDispatcher is GlobalDispatcher)
 			{
-				GlobalDispatcher(weekDispatcher).popupDispatcher.addEventListener(type, globalListenerProxyHandler, true, 1, true);
+				GlobalDispatcher(weakDispatcher).popupDispatcher.addEventListener(type, globalListenerProxyHandler, true, 1, true);
 			}
 			
 			this.type = type;
@@ -129,13 +129,15 @@ package com.asfusion.mate.core
 		*/
 		public function removeListener(type:String):void
 		{
-			var weekDispatcher:IEventDispatcher = dispatcher;
-			weekDispatcher.removeEventListener(type, listenerProxyHandler, true);
-			weekDispatcher.removeEventListener(type, listenerProxyHandler, false);
-			if (weekDispatcher is GlobalDispatcher)
+			var weakDispatcher:IEventDispatcher = dispatcher;
+			weakDispatcher.removeEventListener(type, listenerProxyHandler, true);
+			weakDispatcher.removeEventListener(type, listenerProxyHandler, false);
+			
+			if (weakDispatcher is GlobalDispatcher)
 			{
-				GlobalDispatcher(weekDispatcher).popupDispatcher.removeEventListener(type, globalListenerProxyHandler, true);
+				GlobalDispatcher(weakDispatcher).popupDispatcher.removeEventListener(type, globalListenerProxyHandler, true);
 			}
+			
 			registered = false;
 		}
 		
@@ -151,13 +153,13 @@ package com.asfusion.mate.core
 		 */
 		protected function listenerProxyHandler(event:Event):void
 		{
-			var weekDispatcher:IEventDispatcher = dispatcher;
-			if (weekDispatcher.hasEventListener(getQualifiedClassName(event.target)))
+			var weakDispatcher:IEventDispatcher = dispatcher;
+			if (weakDispatcher.hasEventListener(getQualifiedClassName(event.target)))
 			{
-				weekDispatcher.dispatchEvent(new InjectorEvent(null, event.target));
+				weakDispatcher.dispatchEvent(new InjectorEvent(null, event.target));
 			}
 			
-			weekDispatcher.dispatchEvent(new InjectorEvent(InjectorEvent.INJECT_DERIVATIVES, event.target));
+			weakDispatcher.dispatchEvent(new InjectorEvent(InjectorEvent.INJECT_DERIVATIVES, event.target));
 		}
 		
 		//.........................................globalListenerProxyHandler......................................
@@ -167,17 +169,18 @@ package com.asfusion.mate.core
 		 */
 		protected function globalListenerProxyHandler(event:Event):void
 		{
-			var weekDispatcher:IEventDispatcher = dispatcher;
-			var appDispatcher:Sprite = GlobalDispatcher(weekDispatcher).applicationDispatcher as Sprite;
+			var weakDispatcher:IEventDispatcher = dispatcher;
+			var appDispatcher:Sprite = GlobalDispatcher(weakDispatcher).applicationDispatcher as Sprite;
+			
 			if (event.target is DisplayObject && appDispatcher.contains(event.target as DisplayObject))
 				return;
 			
-			if (weekDispatcher.hasEventListener(getQualifiedClassName(event.target)))
+			if (weakDispatcher.hasEventListener(getQualifiedClassName(event.target)))
 			{
-				weekDispatcher.dispatchEvent(new InjectorEvent(null, event.target));
+				weakDispatcher.dispatchEvent(new InjectorEvent(null, event.target));
 			}
 			
-			weekDispatcher.dispatchEvent(new InjectorEvent(InjectorEvent.INJECT_DERIVATIVES, event.target));
+			weakDispatcher.dispatchEvent(new InjectorEvent(InjectorEvent.INJECT_DERIVATIVES, event.target));
 		
 		}
 		
