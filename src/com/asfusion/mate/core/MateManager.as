@@ -242,6 +242,7 @@ class MateManagerInstance extends EventDispatcher implements IMateManager
 			listenerProxy = new ListenerProxy(eventDispatcher);
 			listenerProxies[eventDispatcher] = listenerProxy;
 		}
+		
 		if (type == null)
 		{
 			listenerProxy.addListener(listenerProxyType, this);
@@ -250,6 +251,7 @@ class MateManagerInstance extends EventDispatcher implements IMateManager
 		{
 			listenerProxy.addListener(type);
 		}
+		
 		return listenerProxy;
 	}
 }
