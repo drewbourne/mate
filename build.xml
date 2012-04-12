@@ -48,7 +48,7 @@
 			<arg line="-external-library-path+='${FLEX_HOME}/frameworks/libs/framework.swc'" />
 			<arg line="-external-library-path+='${FLEX_HOME}/frameworks/libs/rpc.swc'" />
 			<arg line="-external-library-path+='${FLEX_HOME}/frameworks/libs/utilities.swc'" />
-			<arg line="-library-path+=${lib.loc}/SwiftSuspenders-v1.6.0.swc" />
+			<arg line="-library-path+=${lib.loc}/SwiftSuspenders.swc" />
 			<arg line="-output=${bin.loc}/${build.finalName}.swc" />
 			<arg line="-include-sources+=${src.loc}" />
 			<arg line="-source-path+=${src.loc}" />
