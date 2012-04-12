@@ -69,21 +69,6 @@ package com.asfusion.mate.core
 		function mapSingletonOf(whenAskedFor:Class, useSingletonOf:Class, named:String = ""):*;
 		
 		/**
-		 * When asked for an instance of the class <code>whenAskedFor</code>
-		 * use rule <code>useRule</code> to determine the correct injection.
-		 *
-		 * <p>This will use whatever injection is set by the given injection rule as created using
-		 * one of the other mapping methods.</p>
-		 *
-		 * @param whenAskedFor A class or interface
-		 * @param useRule The rule to use for the injection
-		 * @param named An optional name (id)
-		 *
-		 * @return * A reference to the rule for this injection. To be used with <code>mapRule</code>
-		 */
-		function mapRule(whenAskedFor:Class, useRule:*, named:String = ""):*;
-		
-		/**
 		 * Perform an injection into an object, satisfying all it's dependencies
 		 *
 		 * <p>The <code>IInjector</code> should throw an <code>Error</code>
@@ -125,7 +110,7 @@ package com.asfusion.mate.core
 		 *
 		 * @return The injector
 		 */
-		function createChild(applicationDomain:ApplicationDomain = null):IInjector;
+		function createChildInjector(applicationDomain:ApplicationDomain = null):IInjector;
 		
 		/**
 		 * Remove a rule from the injector
@@ -143,6 +128,15 @@ package com.asfusion.mate.core
 		 * @return Whether such a mapping exists
 		 */
 		function hasMapping(clazz:Class, named:String = ""):Boolean;
+		
+		/**
+		 * Does a rule exist to satsify such a request?
+		 *
+		 * @param clazz A class or interface
+		 * @param named An optional name (id)
+		 * @return Whether such a mapping exists
+		 */
+		function hasMappingDirectly(clazz:Class, named:String = ""):Boolean;
 		
 		/**
 		 * @return The Application Domain

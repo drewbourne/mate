@@ -34,7 +34,7 @@ package com.asfusion.mate.core
 			
 			_cache = Cache.LOCAL;
 			
-			injector = globalInjector.createChild();
+			injector = globalInjector.createChildInjector();
 			injector.mapValue(IInjector, injector);
 			injector.mapValue(IReflector, reflector);
 		}
@@ -55,7 +55,7 @@ package com.asfusion.mate.core
 			var oldValue:IEventDispatcher = _dispatcher;
 			if (oldValue !== value)
 			{
-				if (injector.hasMapping(IEventDispatcher))
+				if (injector.hasMappingDirectly(IEventDispatcher))
 				{
 					injector.unmap(IEventDispatcher);
 				}

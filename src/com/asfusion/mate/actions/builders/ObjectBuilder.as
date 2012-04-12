@@ -153,6 +153,11 @@ package com.asfusion.mate.actions.builders
 		{
 			var injector:IInjector = scope.eventMap.getInjectorForCache(cache);
 			
+			trace('ObjectBuilder createInstance',
+				  'whenAskedFor=' + whenAskedFor,
+				  'generator=' + generator,
+				  'cache=' + cache);
+			
 			var creator:Creator = new Creator(
 				generator,
 				scope.dispatcher,

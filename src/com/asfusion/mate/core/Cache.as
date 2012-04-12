@@ -114,10 +114,10 @@ package com.asfusion.mate.core
 		 * Constructor
 		 */
 		public function Cache(key:Class,
-			cacheType:String = Cache.INHERIT,
-			autoCreate:Boolean = false,
-			registerTarget:Boolean = false,
-			constructorArguments:Array = null):void
+							  cacheType:String = Cache.INHERIT,
+							  autoCreate:Boolean = false,
+							  registerTarget:Boolean = false,
+							  constructorArguments:Array = null):void
 		{
 			generatorKey = key;
 			this.autoCreate = autoCreate;
@@ -148,7 +148,7 @@ package com.asfusion.mate.core
 		{
 			var injector:IInjector = scope.eventMap.getInjectorForCache(cacheType);
 			
-			injector.mapValue(cacheKey, instance, String(cacheKey));
+			injector.mapValue(cacheKey, instance);
 		}
 		
 		//.........................................getCachedInstance..........................................
@@ -160,9 +160,7 @@ package com.asfusion.mate.core
 		{
 			var injector:IInjector = scope.eventMap.getInjectorForCache(cacheType);
 			
-			// TODO check injector.hasMapping?
-			
-			return injector.getInstance(cacheKey);
+			return injector.hasMapping(cacheKey) ? injector.getInstance(cacheKey) : null;
 		}
 		
 		//.........................................clearCachedInstance..........................................
@@ -173,9 +171,13 @@ package com.asfusion.mate.core
 		public static function clearCachedInstance(cacheKey:Class, cacheType:String, scope:IScope):*
 		{
 			var injector:IInjector = scope.eventMap.getInjectorForCache(cacheType);
-			var instance:Object = getCachedInstance(cacheKey, cacheType, scope);
+			var instance:Object;
 			
-			injector.unmap(cacheKey);
+			if (injector.hasMapping(cacheKey))
+			{
+				instance = getCachedInstance(cacheKey, cacheType, scope);
+				injector.unmap(cacheKey);
+			}
 			
 			return instance;
 		}
@@ -259,7 +261,7 @@ package com.asfusion.mate.core
 		 * You can register event listeners on all nodes in the display list for a specific type of event, phase, and priority.
 		 */
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, weakRef:Boolean =
-			false):void
+										 false):void
 		{
 			dispatcher.addEventListener(type, listener, useCapture, priority, weakRef);
 		}
@@ -292,8 +294,8 @@ package com.asfusion.mate.core
 		 * the EventDispatcher object, a call to this method has no effect.
 		 */
 		public function removeEventListener(type:String,
-			listener:Function,
-			useCapture:Boolean = false):void
+											listener:Function,
+											useCapture:Boolean = false):void
 		{
 			dispatcher.removeEventListener(type, listener, useCapture);
 		}

@@ -28,6 +28,8 @@ package com.asfusion.mate.core
 	import flash.utils.Dictionary;
 	
 	import mx.core.IMXMLObject;
+	import org.swiftsuspenders.Injector;
+	import org.swiftsuspenders.Reflector;
 	
 	[Exclude(name="activate", kind="event")]
 	[Exclude(name="deactivate", kind="event")]
@@ -56,7 +58,7 @@ package com.asfusion.mate.core
 		public function EventMap()
 		{
 			globalInjector = MateManager.instance.injector;
-			injector = globalInjector.createChild();
+			injector = globalInjector.createChildInjector();
 			reflector = MateManager.instance.reflector;
 			
 			mapInjections();
@@ -299,7 +301,7 @@ package com.asfusion.mate.core
 				
 				case Cache.NONE:
 				default:
-					return getInjector().createChild();
+					return getInjector().createChildInjector();
 			}
 		}
 		

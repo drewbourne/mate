@@ -59,26 +59,23 @@ package com.asfusion.mate.core
 /******************************************************************************************************************
 *                                         Inner Class MateManagerInstance
 *******************************************************************************************************************/
-import com.asfusion.mate.adapters.SwiftSuspendersInjector;
-import com.asfusion.mate.adapters.SwiftSuspendersReflector;
 import com.asfusion.mate.core.*;
 import com.asfusion.mate.events.DispatcherEvent;
 import com.asfusion.mate.events.InjectorSettingsEvent;
 import com.asfusion.mate.utils.debug.*;
 
-import flash.display.DisplayObject;
-import flash.events.Event;
 import flash.events.EventDispatcher;
 import flash.events.IEventDispatcher;
 import flash.utils.Dictionary;
-import flash.utils.getDefinitionByName;
 
 import mx.logging.ILoggingTarget;
 
+import org.swiftsuspenders.DescribeTypeJSONReflector;
+import org.swiftsuspenders.Injector;
+import org.swiftsuspenders.Reflector;
 
 class MateManagerInstance extends EventDispatcher implements IMateManager
 {
-	
 	private var methodQueue:Dictionary = new Dictionary();
 	private var listenerProxies:Dictionary = new Dictionary(true);
 	

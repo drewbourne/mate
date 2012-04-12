@@ -21,6 +21,8 @@ package com.asfusion.mate.core
 {
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
+	import org.swiftsuspenders.Injector;
+	import org.swiftsuspenders.Reflector;
 	
 	/**
 	 * Interface that provides an event dispatcher.

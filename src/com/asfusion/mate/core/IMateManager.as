@@ -25,7 +25,6 @@ package com.asfusion.mate.core
 	import flash.utils.Dictionary;
 	
 	import mx.logging.ILoggingTarget;
-	import mx.managers.ISystemManager;
 	
 	/**
 	 * <code>IMateManager</code> is the core class of Mate
@@ -55,14 +54,14 @@ package com.asfusion.mate.core
 		
 		//........................................injector..........................................
 		/**
-		 * IInjector
+		 * SwiftSuspenders Injector
 		 */
 		function set injector(value:IInjector):void
 		function get injector():IInjector
 		
 		//........................................reflector..........................................
 		/**
-		 * IReflector
+		 * SwiftSuspenders Reflector
 		 */
 		function set reflector(value:IReflector):void
 		function get reflector():IReflector

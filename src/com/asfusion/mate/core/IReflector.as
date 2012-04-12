@@ -17,7 +17,7 @@ package com.asfusion.mate.core
 		 * @param applicationDomain
 		 * @return Boolean
 		 */
-		function classExtendsOrImplements(classOrClassName:Object, superclass:Class, applicationDomain:ApplicationDomain = null):Boolean;
+		function typeImplements(type:Class, superclass:Class, applicationDomain:ApplicationDomain = null):Boolean;
 		
 		/**
 		 * Get the class of this instance
