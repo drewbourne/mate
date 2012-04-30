@@ -301,6 +301,9 @@ package com.asfusion.mate.core
 				
 				case Cache.NONE:
 				default:
+					// the injector returned here is used to lookup injections up the chain of parent injectors
+					// and then any created instances are stored into this injector. by returning a child injector
+					// that is not cached it will eventually be garbage collected.
 					return getInjector().createChildInjector();
 			}
 		}
