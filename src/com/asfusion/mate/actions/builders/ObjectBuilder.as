@@ -24,6 +24,7 @@ package com.asfusion.mate.actions.builders
 	import com.asfusion.mate.actions.IAction;
 	import com.asfusion.mate.core.*;
 	import com.asfusion.mate.events.InjectorEvent;
+	import com.asfusion.mate.utils.debug.IMateLogger;
 	
 	import flash.events.Event;
 	
@@ -152,18 +153,14 @@ package com.asfusion.mate.actions.builders
 		protected function createInstance(scope:IScope):Object
 		{
 			var injector:IInjector = scope.eventMap.getInjectorForCache(cache);
+			var logger:IMateLogger = scope.getLogger();
 			
-			trace('ObjectBuilder createInstance',
-				  'whenAskedFor=' + whenAskedFor,
-				  'generator=' + generator,
-				  'cache=' + cache);
+//			trace('ObjectBuilder createInstance',
+//				  'whenAskedFor=' + whenAskedFor,
+//				  'generator=' + generator,
+//				  'cache=' + cache);
 			
-			var creator:Creator = new Creator(
-				generator,
-				scope.dispatcher,
-				injector,
-				scope.getLogger(),
-				whenAskedFor);
+			var creator:Creator = new Creator(generator, scope.dispatcher, injector, logger, whenAskedFor);
 			
 			currentInstance = creator.create(scope, registerTarget, constructorArguments, cache);
 			

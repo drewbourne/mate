@@ -105,7 +105,7 @@ package com.asfusion.mate.actions
 				? (instance as ISmartObject).getValue(scope)
 				: instance;
 			
-			trace('CacheSetter prepare cacheKey=', cacheKey, 'cache=', cache, 'instance=', instance);
+			// trace('CacheSetter prepare cacheKey=', cacheKey, 'cache=', cache, 'instance=', instance);
 			
 			if (currentInstance == null || currentInstance == undefined)
 			{
